@@ -11,23 +11,13 @@ app.use(bodyParser.json());
 
 // Enable CORS for all origins
 app.use(cors());
-function generateUniqueId(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
 
 // POST endpoint to handle sending email
 app.post('/sendEmail', async (req, res) => {
     try {
         const { to, subject, body } = req.body;
-        const uniqueIdentifier = generateUniqueId(10);
 
-        // Constructing the email body with HTML and including the unique link
-        const uniqueLink = `https://wxyaze-sarthak-io.vercel.app/email-tracking/${uniqueIdentifier}`;
+        // Constructing a beautiful email body with HTML
         let ebody = `
             <div style="font-family: Arial, sans-serif; color: #333; background-color: #f5f5f5; padding: 20px;">
                 <h2 style="color: #008000;">Welcome to Cognito!</h2>
@@ -35,16 +25,14 @@ app.post('/sendEmail', async (req, res) => {
                     Thank you for joining Cognito, your platform for submitting minor projects. We are excited to have you on board!
                 </p>
                 <p>
-                    If you have any questions or need assistance, feel free to contact us at support@cognito.com.
+                    If you have any questions or need assistance, feel free to contact us at sarthak25ic0492satiengg.in.
                 </p>
                 <p>
                     Best regards,<br/>
                     The Cognito Team
                 </p>
-                <a href="${uniqueLink}" style="display: none;">Track Email</a>
             </div>
         `;
-
         // Send email using fetch
         const response = await fetch('https://smtpjs.com/v3/smtpjs.aspx', {
             method: 'POST',
@@ -57,13 +45,12 @@ app.post('/sendEmail', async (req, res) => {
                 From: "sarthak25ic049@satiengg.in",
                 Subject: subject,
                 Body: ebody,
-                Action: "Send"
+                Action: "Send" // Add Action property
             })
         });
-
         const data = await response.text();
-        if (data === 'ok') {
-            console.log('Email sent successfully');
+        if (data==='ok') {
+            console.log(data); 
             res.send('Email sent successfully');
         } else {
             throw new Error('Failed to send email');
@@ -72,15 +59,6 @@ app.post('/sendEmail', async (req, res) => {
         console.error(error);
         res.status(500).send('Error sending email');
     }
-});
-
-// Endpoint to handle email tracking
-app.get('/email-tracking/:id', (req, res) => {
-    const { id } = req.params;
-    // Here you can track the email open event based on the unique identifier
-    console.log(`Email with ID ${id} opened`);
-    // Redirect to a transparent image or any other content
-    res.redirect('/path/to/transparent.png');
 });
 
 // Start server
