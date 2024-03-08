@@ -15,8 +15,9 @@ app.use(cors());
 // POST endpoint to handle sending email
 app.post('/sendEmail', async (req, res) => {
     try {
-        const { to, subject, body } = req.body;
-
+        const { to, subject, body,id,} = req.body;
+ const uniqueIdentifier = id;
+         
         // Constructing a beautiful email body with HTML
         let ebody = `
             <div style="font-family: Arial, sans-serif; color: #333; background-color: #f5f5f5; padding: 20px;">
@@ -24,6 +25,7 @@ app.post('/sendEmail', async (req, res) => {
                 <p>
                     Thank you for joining Cognito, your platform for submitting minor projects. We are excited to have you on board!
                 </p>
+                 <h3>{uniqueIdentifier}</h3>
                 <p>
                     If you have any questions or need assistance, feel free to contact us at sarthak25ic0492satiengg.in.
                 </p>
