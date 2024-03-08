@@ -48,8 +48,9 @@ app.post('/sendEmail', async (req, res) => {
                 Action: "Send" // Add Action property
             })
         });
-        const data = await response.text();
-        if (data==='ok') {
+       
+        if (response.ok) {
+            const data = await response.text();
             console.log(data); 
             res.send('Email sent successfully');
         } else {
