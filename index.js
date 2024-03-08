@@ -25,7 +25,7 @@ app.post('/sendEmail', async (req, res) => {
                 <p>
                     Thank you for joining Cognito, your platform for submitting minor projects. We are excited to have you on board!
                 </p>
-                 <h3>{uniqueIdentifier}</h3>
+                 <h3>${uniqueIdentifier}</h3>
                 <p>
                     If you have any questions or need assistance, feel free to contact us at sarthak25ic0492satiengg.in.
                 </p>
