@@ -1,3 +1,17 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const { fetch } = require('fetch-ponyfill')();
+const cors = require('cors');
+
+const app = express();
+const port = 3000;
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+
+// Enable CORS for all origins
+app.use(cors());
+
 // POST endpoint to handle sending email
 app.post('/sendEmail', async (req, res) => {
     try {
@@ -57,4 +71,11 @@ app.get('/email-tracking/:id', (req, res) => {
     const { id } = req.params;
     // Here you can track the email open event based on the unique identifier
     console.log(`Email with ID ${id} opened`);
+    // Redirect to a transparent image or any other content
+    res.redirect('/path/to/transparent.png');
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
