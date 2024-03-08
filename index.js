@@ -11,12 +11,20 @@ app.use(bodyParser.json());
 
 // Enable CORS for all origins
 app.use(cors());
+function generateUniqueId(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
 
 // POST endpoint to handle sending email
 app.post('/sendEmail', async (req, res) => {
     try {
         const { to, subject, body } = req.body;
-        const uniqueIdentifier = generateUniqueIdentifier();
+        const uniqueIdentifier = generateUniqueId(10);
 
         // Constructing the email body with HTML and including the unique link
         const uniqueLink = `https://wxyaze-sarthak-io.vercel.app/email-tracking/${uniqueIdentifier}`;
